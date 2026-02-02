@@ -1,0 +1,13 @@
+import numpy as np
+
+def generate_signal(candles):
+    closes = np.array([c["close"] for c in candles])
+
+    fast = closes[-5:].mean()
+    slow = closes[-20:].mean()
+
+    if fast > slow:
+        return "LONG"
+    elif fast < slow:
+        return "SHORT"
+    return "FLAT"
