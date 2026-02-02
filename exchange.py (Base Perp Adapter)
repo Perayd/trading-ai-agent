@@ -1,0 +1,22 @@
+class BasePerpExchange:
+    def __init__(self, api_key, api_secret):
+        self.api_key = api_key
+        self.api_secret = api_secret
+
+    async def get_balance(self):
+        return 1000  # replace with real API
+
+    async def get_candles(self, symbol, timeframe):
+        return [
+            {"close": 3000},
+            {"close": 3010},
+            {"close": 3020},
+            {"close": 3015},
+            {"close": 3030},
+        ]
+
+    async def place_order(self, symbol, side, size, leverage):
+        print(f"ORDER → {side} {size} {symbol} @ {leverage}x")
+
+    async def close_position(self, symbol):
+        print(f"CLOSE → {symbol}")
