@@ -1,0 +1,7 @@
+base-perp-ai/
+├─ agent.py          # AI logic
+├─ strategy.py       # signals
+├─ risk.py           # position sizing
+├─ exchange.py       # Base perp adapter (Aevo/Vertex)
+├─ config.py
+└─ main.py
