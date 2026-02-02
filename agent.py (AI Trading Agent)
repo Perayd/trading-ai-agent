@@ -1,0 +1,29 @@
+from strategy import generate_signal
+from risk import position_size
+
+class TradingAgent:
+    def __init__(self, exchange, config):
+        self.exchange = exchange
+        self.cfg = config
+
+    async def run(self):
+        candles = await self.exchange.get_candles(
+            self.cfg.SYMBOL, self.cfg.TIMEFRAME
+        )
+
+        signal = generate_signal(candles)
+
+        if signal == "FLAT":
+            return
+
+        balance = await self.exchange.get_balance()
+        entry = candles[-1]["close"]
+        stop = entry * (0.995 if signal == "LONG" else 1.005)
+
+        size = position_size(
+            balance, entry, stop, self.cfg.RISK_PER_TRADE
+        )
+
+        await self.exchange.place_order(
+            self.cfg.SYMBOL, signal, size, self.cfg.LEVERAGE
+        )
